@@ -337,15 +337,7 @@ const ClientsQuiz = () => {
   };
 
   const saveTableData = async (folderId) => {
-    // const auth = getAuth();
-    // const user = auth.currentUser;
-    // if (!user) {
-    //   alert("No estás autenticado.");
-    //   return;
-    // }
-    // const uid = user.uid;
     const tableData = {
-      // uid,
       empresa: formValues.companyName,
       fecha: new Date().toLocaleDateString(),
       hora: new Date().toLocaleTimeString(),
