@@ -1,9 +1,4 @@
 import "./styles.css";
-// import {
-//   addDoc,
-//   collection,
-// } from "firebase/firestore";
-// import { db } from "firebase";
 import html2pdf from "html2pdf.js";
 import { useState } from "react";
 import logo from "./logo.png";
@@ -31,8 +26,8 @@ const ClientsQuiz = () => {
     step6Points: 0,
     step7Points: 0,
     step8Points: 0,
-  })
-  
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => {
@@ -112,7 +107,7 @@ const ClientsQuiz = () => {
     } else if (investmentValue === "c") {
       stepPoints.step6Points = 1;
     }
-    
+
     if (accessibilityValue === "a") {
       stepPoints.step7Points = 5;
     } else if (accessibilityValue === "b") {
@@ -131,9 +126,16 @@ const ClientsQuiz = () => {
   };
 
   const addPoints = () => {
-    let stepTotalPoints = stepPoints.step2Points + stepPoints.step3Points + stepPoints.step4Points + stepPoints.step5Points + stepPoints.step6Points + stepPoints.step7Points + stepPoints.step8Points;
+    let stepTotalPoints =
+      stepPoints.step2Points +
+      stepPoints.step3Points +
+      stepPoints.step4Points +
+      stepPoints.step5Points +
+      stepPoints.step6Points +
+      stepPoints.step7Points +
+      stepPoints.step8Points;
     return stepTotalPoints;
-  }
+  };
 
   const calculateResults = () => {
     evaluateConditions();
@@ -273,7 +275,7 @@ const ClientsQuiz = () => {
         },
       ]);
     }
-  }
+  };
 
   const isStepCompleted = () => {
     switch (step) {
@@ -319,11 +321,11 @@ const ClientsQuiz = () => {
       step7Points: 0,
       step8Points: 0,
     });
-  }
+  };
 
   const downloadPDF = () => {
     const tableElement = document.querySelector("#results-page");
-    
+
     let opt = {
       margin: 0.2,
       filename: "tabla_resultados.pdf",
@@ -332,22 +334,8 @@ const ClientsQuiz = () => {
       html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     };
-    
-    html2pdf().set(opt).from(tableElement).save();
-  };
 
-  const saveTableData = async (folderId) => {
-    const tableData = {
-      empresa: formValues.companyName,
-      fecha: new Date().toLocaleDateString(),
-      hora: new Date().toLocaleTimeString(),
-    };
-    try {
-      // await addDoc(collection(db, "carpetas"), tableData);
-      alert("Tabla guardada exitosamente.");
-    } catch (error) {
-      alert("Hubo un problema al guardar la tabla.");
-    }
+    html2pdf().set(opt).from(tableElement).save();
   };
 
   return (
@@ -362,8 +350,8 @@ const ClientsQuiz = () => {
         {step === 1 && (
           <div className="step1 step-container">
             <div className="logo-header">
-            <img src={logo} alt="Logo" className="logo" />
-          </div>
+              <img src={logo} alt="Logo" className="logo" />
+            </div>
 
             <h3>Examen de Diagnóstico para Empresas</h3>
 
@@ -868,7 +856,13 @@ const ClientsQuiz = () => {
             <div className="buttons">
               <button onClick={handleBack}>Regresar</button>
 
-              <button onClick={() => {handleNext(); calculateResults();}} disabled={!isStepCompleted()}>
+              <button
+                onClick={() => {
+                  handleNext();
+                  calculateResults();
+                }}
+                disabled={!isStepCompleted()}
+              >
                 Continuar
               </button>
             </div>
@@ -929,7 +923,8 @@ const ClientsQuiz = () => {
                       {results.map((res) =>
                         res.books.map((info) => (
                           <li>
-                            <span className="italic">"{info.title}"</span> por {info.author}
+                            <span className="italic">"{info.title}"</span> por{" "}
+                            {info.author}
                           </li>
                         ))
                       )}
@@ -968,15 +963,6 @@ const ClientsQuiz = () => {
               >
                 Descargar PDF
               </button>
-
-              <button
-                onClick={() => {
-                  saveTableData();
-                }}
-                onKeyPress={() => {
-                  saveTableData();
-                }}
-                className="save-button">Guardar</button>
 
               <div className="buttons">
                 <button
